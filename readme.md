@@ -14,6 +14,8 @@ However for builing with default **ARG**s:
 
 > `docker build --build-arg -t remote-dev-ubuntu20.04-gcc9:213-913 .`
 
+The above base build image is available at: [Image Layer Details - pradhyumna85/geosx:base-build-image-geosx-0.2.0 | Docker Hub](https://hub.docker.com/layers/pradhyumna85/geosx/base-build-image-geosx-0.2.0/images/sha256-15dfa74fa041ac989f94404da9225d219b61dd0bb74fe58a02fd03b75dbb5da6?context=repo)
+
 # Launching a container from the Base image
 
 On windows cmd:
@@ -23,6 +25,8 @@ On windows cmd:
 On powershell/bash:
 
 > `docker run -it -d --cap-add=SYS_PTRACE --name geosx-build-image -p 64000:22 -v "${PWD}\home:/home/mpiuser" remote-dev-ubuntu20.04-gcc9:213-913`
+
+*Note: **-v** parameter is for bind mount and is optional
 
 # Accessing container shell
 
