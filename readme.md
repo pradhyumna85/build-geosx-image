@@ -30,7 +30,9 @@ On powershell/bash:
 
 # Building GEOSX inside the container
 
-Cloning and setting up GEOSX repository
+Cloning and setting up GEOSX repository. Starting with switching user
+
+> `su mpiuser`
 
 > `cd /app`
 
