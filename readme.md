@@ -1,4 +1,25 @@
-# Information
+# Description
+
+GEOSX is a simulation framework for modeling coupled flow, transport, and geomechanics in the subsurface. The code provides advanced solvers for a number of target applications, including:
+
+- carbon sequestration,
+- geothermal energy,
+- and similar systems.
+
+A key focus of the project is achieving scalable performance on current and next-generation high performance computing systems. We do this through a portable programming model and research into scalable algorithms.
+
+You may want to browse our publications page for more details on the HPC, numerics, and applied engineering components of this effort.
+
+***Note - This is not an official repository of GEOSX**
+
+Official links:
+
+- [GEOSX documentation](https://geosx-geosx.readthedocs-hosted.com/en/latest/?).
+- [GEOSX PDF documentation](https://geosx-geosx.readthedocs-hosted.com/_/downloads/en/latest/pdf/)
+- [GEOSX Official website](https://www.geosx.org/)
+- [GEOSX official Github repository](https://github.com/GEOSX/GEOSX)
+
+# Resources
 
 * Dockerfile to build GEOSX ([GEOSX Documentation — GEOSX documentation (readthedocs-hosted.com)](https://geosx-geosx.readthedocs-hosted.com/en/latest/index.html)) from source.
 * The base image ([Image Layer Details - geosx/ubuntu20.04-gcc9:213-913 | Docker Hub](https://hub.docker.com/layers/geosx/ubuntu20.04-gcc9/213-913/images/sha256-4e20100e6a333a098a635dec3226380ca5f9131501723563090a4dc599582e63?context=explore)) used contains prebuit TPL binaries for GEOSX.
@@ -92,7 +113,9 @@ After successfully building GEOSX in the container you can commit that container
 
 > `docker push <your_docker_repository_url>:<tag>`
 
-*Make sure you are authenticated before pushing. Build is already pushed and available at: [Image Layer Details - pradhyumna85/geosx:0.2.0-hp-zbook-17-G6-xeon-x86 | Docker Hub](https://hub.docker.com/layers/pradhyumna85/geosx/0.2.0-hp-zbook-17-G6-xeon-x86/images/sha256-e26145f6ac899b7223e0709b06de2515112cfc83b25b7b86b6beffdd1a097949?context=explore)
+*Make sure you are authenticated before pushing. Build is already pushed and available at: [Image Layer Details - pradhyumna85/geosx:0.2.0-hp-zbook-17-G6-xeon-x86 | Docker Hub](https://hub.docker.com/layers/pradhyumna85/geosx/0.2.0-hp-zbook-17-G6-xeon-x86/images/sha256-e26145f6ac899b7223e0709b06de2515112cfc83b25b7b86b6beffdd1a097949?context=explore).
+
+You can also find the basic guilde on using GEOSX inside a docker container using this prebuilt image at my docker hub repository's readme/description: [pradhyumna85/geosx - Docker Image | Docker Hub](https://hub.docker.com/r/pradhyumna85/geosx).
 
 # References
 
