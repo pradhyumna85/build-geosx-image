@@ -22,8 +22,10 @@ Official links:
 # Resources
 
 * Dockerfile to build GEOSX ([GEOSX Documentation — GEOSX documentation (readthedocs-hosted.com)](https://geosx-geosx.readthedocs-hosted.com/en/latest/index.html)) from source.
-* The base image ([Image Layer Details - geosx/ubuntu20.04-gcc9:213-913 | Docker Hub](https://hub.docker.com/layers/geosx/ubuntu20.04-gcc9/213-913/images/sha256-4e20100e6a333a098a635dec3226380ca5f9131501723563090a4dc599582e63?context=explore)) used contains prebuit TPL binaries for GEOSX.
+* The TPL base image ([Image Layer Details - geosx/ubuntu20.04-gcc9:213-913 | Docker Hub](https://hub.docker.com/layers/geosx/ubuntu20.04-gcc9/213-913/images/sha256-4e20100e6a333a098a635dec3226380ca5f9131501723563090a4dc599582e63?context=explore)) used contains prebuit TPL binaries for GEOSX.
 * Prebuilt GEOSX image (using **docker.cmake** in this repository) is hosted at Docker-hub: [pradhyumna85/geosx - Docker Image | Docker Hub](https://hub.docker.com/r/pradhyumna85/geosx), tag: [pradhyumna85/geosx:0.2.0-hp-zbook-17-G6-xeon-x86](https://hub.docker.com/layers/pradhyumna85/geosx/0.2.0-hp-zbook-17-G6-xeon-x86/images/sha256-e26145f6ac899b7223e0709b06de2515112cfc83b25b7b86b6beffdd1a097949?context=explore)
+
+***Note - for the build guide below, it is recommended to use the latest TPL base image tag with latest GEOSX git commit or source code.**
 
 # Building Base image
 
