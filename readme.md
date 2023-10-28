@@ -29,6 +29,9 @@ Official links:
 
 # Building Base image
 
+***Note - At the time of writing this, the above prebuilt image was built using git commit id: [af23e1b4a](https://github.com/GEOS-DEV/GEOS/commit/af23e1b4a768e9be8b8bb9e1b27b77909f0ea43a). Browse files for th above commit version: [tree - af23e1b4a](https://github.com/GEOS-DEV/GEOS/tree/af23e1b4a768e9be8b8bb9e1b27b77909f0ea43a).**
+___
+
 Please refer the build **ARG**s in the Dockerfile and pass these to docker build according to your needs, like:
 
 > `docker build --build-arg ORG=geosx --build-arg IMG=ubuntu20.04-gcc9 --build-arg CMAKE_BASE_VERSION=3.22 --build-arg CMAKE_SUB_VERSION=6 --build-arg VERSION=213-913 -t remote-dev-ubuntu20.04-gcc9:213-913 .`
