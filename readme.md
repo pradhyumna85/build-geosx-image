@@ -78,7 +78,7 @@ Cloning and setting up GEOSX repository. Starting with switching user
 
 > `git submodule update`
 
-Place your platform **cmake** file at **host-configs/your-platform.cmake**. Example **docker.cmake** is available this github the repository.
+Place your platform **cmake** file at **host-configs/your-platform.cmake**. Example **docker.cmake** is available in this github repository.
 
 > `cd /app/GEOSX`
 
@@ -102,11 +102,11 @@ Testing the build
 
 Ideally it should show 100% coverage
 
-Built GEOSX binary now should be available at `/app/GEOSX/install-you-platform-release/bin/geosx`, in the `install-you-platform-release` will be `install-docker-release` if used **docker.cmake** for building.
+Built GEOSX binary now should be available at `/app/GEOSX/install-your-platform-release/bin/geosx`, in the `install-your-platform-release` will be `install-docker-release` if used **docker.cmake** for building.
 
 You can test the binary by the command:
 
-> `/app/GEOSX/install-you-platform-release/bin/geosx --help`
+> `/app/GEOSX/install-your-platform-release/bin/geosx --help`
 
 Done!
 
