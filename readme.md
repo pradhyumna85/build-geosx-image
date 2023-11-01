@@ -12,6 +12,8 @@ You may want to browse our publications page for more details on the HPC, numeri
 
 ***Note - This is not an official repository of GEOSX**
 
+***Note - This guide is for building GEOSX for CPU**
+
 Official links:
 
 - [GEOSX documentation](https://geosx-geosx.readthedocs-hosted.com/en/latest/?).
