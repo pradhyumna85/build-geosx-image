@@ -27,107 +27,37 @@ Official links:
 
 ***Note - for the build guide below, it is recommended to use the latest TPL base image tag with latest GEOSX git commit or source code.**
 
-# Building Base image
+# Dockerfile build arguments
 
-***Note - At the time of writing this, the above prebuilt image was built using [GEOSX v1.0.1](https://github.com/GEOS-DEV/GEOS/releases/tag/v1.0.1), git commit id: [2bf2c4a](https://github.com/GEOS-DEV/GEOS/commit/2bf2c4a06a102fb53aa9c4b98c59bc765be79adb)). Browse files for th above commit version: [tree - 2bf2c4a](https://github.com/GEOS-DEV/GEOS/tree/2bf2c4a06a102fb53aa9c4b98c59bc765be79adb).**
-
----
+Refer how to pass arguments to docker build - [here](https://docs.docker.com/build/guide/build-args/)
 
 Please refer the build **ARG**s in the Dockerfile and pass these to docker build according to your needs, like:
 
-> `docker build --build-arg ORG=geosx --build-arg IMG=ubuntu20.04-gcc9 --build-arg CMAKE_BASE_VERSION=3.23 --build-arg CMAKE_SUB_VERSION=5 --build-arg VERSION=245-83 -t remote-dev-ubuntu20.04-gcc9:245-83 .`
+> `docker build --build-arg ORG=geosx --build-arg IMG=ubuntu20.04-gcc9 --build-arg VERSION=245-83 --build-arg CMAKE_BASE_VERSION=3.23 --build-arg CMAKE_SUB_VERSION=5 --build-arg TPL_DIREC=/opt/GEOS/GEOS_TPL-245-83-da2415a --build-arg COMMIT=v1.0.1 -t <your_docker_repository_url>:<tag> .`
 
 However for builing with default **ARG**s:
 
-> `docker build -t remote-dev-ubuntu20.04-gcc9:245-83 .`
+> `docker build -t <your_docker_repository_url>:<tag> .`
 
-The above base build image is available at: [Image Layer Details - pradhyumna85/geosx:base-build-image-geosx-1.0.1-TPL-245-83 | Docker Hub](https://hub.docker.com/layers/pradhyumna85/geosx/base-build-image-geosx-1.0.1-TPL-245-83/images/sha256-e64f78dd885e9cfbc7da96bc03d998c1d65a76ab09a7ee70fa85397333cec0c1?context=repo)
+Push the built image to your remote docker repo (make sure you are authenticated before running this):
+
+> `docker push <your_docker_repository_url>:<tag>`
 
 # Launching a container from the Base image
 
 On windows cmd:
 
-> `docker run -it -d --cap-add=SYS_PTRACE --name geosx-build-image-101 -p 64000:22 -v "%cd%\home:/home/mpiuser" remote-dev-ubuntu20.04-gcc9:245-83`
+> `docker run -it -d --cap-add=SYS_PTRACE --name geosx -p 64000:22 -v "%cd%\home:/home/mpiuser" <your_docker_repository_url>:<tag>`
 
 On powershell/bash:
 
-> `docker run -it -d --cap-add=SYS_PTRACE --name geosx-build-image-101 -p 64000:22 -v "${PWD}\home:/home/mpiuser" remote-dev-ubuntu20.04-gcc9:245-83`
+> `docker run -it -d --cap-add=SYS_PTRACE --name geosx -p 64000:22 -v "${PWD}\home:/home/mpiuser" <your_docker_repository_url>:<tag>`
 
 *Note: **-v** parameter is for bind mount and is optional in case you really require at this step.
 
-# Accessing container shell
-
-> `docker exec -it geosx-build-image-101 bash`
-
-# Building GEOSX inside the container
-
-Cloning and setting up GEOSX repository. Starting with switching user
-
-> `su mpiuser`
-
-> `pip install virtualenv`
-
-> `cd /app`
-
-> `git clone https://github.com/GEOSX/GEOSX.git`
-
-> `cd GEOSX`
-
-> `git checkout v1.0.1`
-
-> `git lfs install`
-
-> `git submodule init`
-
-> `git submodule deinit integratedTests`
-
-> `git submodule update`
-
-Place/create your platform **cmake** file at **host-configs/your-platform.cmake**. Example **docker.cmake** is available in this github repository (shell file editor like vim, nano etc can be used to create cmake file by copying and pasting content of docker.cmake in this repository).
-
-> `cd /app/GEOSX`
-
-> `python scripts/config-build.py -hc host-configs/docker.cmake -bt Release`
-
-> `cd build-docker-release`
-
-> `make -j16`
-
-In the above "16" is the number of cpu cores available, set it to maximum cores available to the container, eg "4"
-
-The `make -j..` command, output shouldn't even contain warnings ideally to make sure everything works correctly post build.
-
-> `make install`
-
-Testing the build
-
-> `cd /app/GEOSX/build-docker-release`
-
-> `ctest -V`
-
-Ideally it should show 100% coverage
-
-Built GEOSX binary now should be available at `/app/GEOSX/install-docker-release/bin/geosx`
-
-You can test the binary by the command:
-
-> `/app/GEOSX/install-docker-release/bin/geosx --help`
-
-**Note - The above command shows Geosx version as 0.2.0 instead of 1.0.1 which is incorrect and safe to ignore.*
-
-Done!
-
 # Post build
 
-After successfully building GEOSX in the container you can commit that container as an image (and push to some container repository) for reusing later.
-
-> `docker commit geosx-build-image-101 <your_docker_repository_url>:<tag>`
-
-> `docker push <your_docker_repository_url>:<tag>`
-
-*Make sure you are authenticated to the remote image repository before pushing. Build is already pushed and available at: [Image Layer Details - pradhyumna85/geosx:1.0.1-cpu-x86-64 | Docker Hub](https://hub.docker.com/layers/pradhyumna85/geosx/1.0.1-cpu-x86-64/images/sha256-aa6d2c86174669acb419b46f95008d7480aa1303c38ebd3633fc6530e46b9956?context=repo).
-
-You can also find the basic guilde on using GEOSX inside a docker container using this prebuilt image at my docker hub repository's readme/description: [pradhyumna85/geosx - Docker Image | Docker Hub](https://hub.docker.com/r/pradhyumna85/geosx).
+Basic usage guide: [pradhyumna85/geosx - Docker Image | Docker Hub](https://hub.docker.com/r/pradhyumna85/geosx).
 
 # References
 

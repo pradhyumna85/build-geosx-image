@@ -2,7 +2,7 @@
 
 # detect host and name the configuration file
 site_name(HOST_NAME)
-set(CONFIG_NAME "hp-zbook-17-G6-hal-xeon-x86" CACHE PATH "")
+set(CONFIG_NAME "x86-64_cpu_build" CACHE PATH "")
 message("CONFIG_NAME = ${CONFIG_NAME}")
 
 # set paths to C, C++, and Fortran compilers. Note that while GEOSX does not contain any Fortran code,
@@ -38,7 +38,20 @@ set(ENABLE_CALIPER ON CACHE BOOL "")
 set(ENABLE_HYPRE ON CACHE BOOL "" FORCE)
 set(GEOSX_LA_INTERFACE "Hypre" CACHE STRING "" FORCE)
 
-# define the path to your compiled installation directory
-set(GEOSX_TPL_DIR "/opt/GEOS/GEOS_TPL-245-83-da2415a" CACHE PATH "")
+
+# define the path to your pre compiled TPL directory depending on the TPL image used in the dockerfile
+################################ TPL IMPORTANT !!! #################################
+####################################################################################
+####################################################################################
+
+## for image geosx/ubuntu20.04-gcc9:245-83,its /opt/GEOS/GEOS_TPL-245-83-da2415a, please inspect the TPL image filesystem before building this container
+
+# set(GEOSX_TPL_DIR "/opt/GEOS/GEOS_TPL-245-83-da2415a" CACHE PATH "")
+set(GEOSX_TPL_DIR "$ENV{TPL_DIREC}" CACHE PATH "")
+
+################################ TPL IMPORTANT !!! #################################
+####################################################################################
+####################################################################################
+
 # let GEOSX define some third party libraries information for you
 include(${CMAKE_CURRENT_LIST_DIR}/tpls.cmake)

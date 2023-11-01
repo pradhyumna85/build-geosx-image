@@ -1,10 +1,18 @@
-# Define you base image for build arguments
+## TPL base image to use -> https://hub.docker.com/r/geosx/ubuntu20.04-gcc9/tags
 ARG IMG=ubuntu20.04-gcc9
 ARG VERSION=245-83
 ARG ORG=geosx
 
+## location of precompiled TPL directory for the above image
+## for image geosx/ubuntu20.04-gcc9:245-83,its /opt/GEOS/GEOS_TPL-245-83-da2415a, please inspect the TPL image filesystem before building this container
+ARG TPL_DIREC=/opt/GEOS/GEOS_TPL-245-83-da2415a
+
+## cmake version details
 ARG CMAKE_BASE_VERSION=3.23
 ARG CMAKE_SUB_VERSION=5
+
+## build GEOSX for respective git commit/tag
+ARG COMMIT=v1.0.1
 
 # starting from base image
 FROM ${ORG}/${IMG}:${VERSION}
@@ -13,8 +21,17 @@ ARG IMG
 ARG VERSION
 ARG ORG
 
+ARG TPL_DIREC
+
 ARG CMAKE_BASE_VERSION
 ARG CMAKE_SUB_VERSION
+
+ARG COMMIT
+
+ENV TPL_DIREC=${TPL_DIREC}
+
+## echo TPL directory path
+RUN echo $TPL_DIREC
 
 RUN apt-get update
 RUN apt-get remove --purge -y texlive graphviz
@@ -94,7 +111,46 @@ RUN touch /root/.ssh/environment &&\
     echo "OMPI_CXX=${CXX}" >> /root/.ssh/environment &&\
     echo "GEOSX_TPL_DIR=${GEOSX_TPL_DIR}" >> /root/.ssh/environment
 
-WORKDIR /home/mpiuser
+## Setup GEOSX from here
+
+USER mpiuser
+
+ENV TPL_DIREC=${TPL_DIREC}
+
+WORKDIR /app
+
+## install virtualenv as required for building pygeosx module
+RUN pip install virtualenv
+
+## clone and setup GEOSX repo
+RUN git clone https://github.com/GEOSX/GEOSX.git
+WORKDIR /app/GEOSX
+RUN git checkout ${COMMIT}
+RUN git lfs install
+RUN git submodule init
+RUN git submodule deinit integratedTests
+RUN git submodule update
+
+## Build GEOSX
+## add docker.cmake
+ADD docker.cmake /app/GEOSX/host-configs/docker.cmake
+
+## cmake build
+RUN rm -rf /app/GEOSX/build-docker-release /app/GEOSX/install-docker-release
+RUN python scripts/config-build.py -hc host-configs/docker.cmake -bt Release
+WORKDIR /app/GEOSX/build-docker-release
+RUN make -j16
+RUN make install
+
+## run post build tests 
+RUN ctest -V
+
+## verify GEOSX binary 
+RUN /app/GEOSX/install-docker-release/bin/geosx --help
+
+## setup SSH from here:
+## switch user back to root
+USER root
 
 # This is the default ssh port that we do not need to modify.
 EXPOSE 22
@@ -110,4 +166,5 @@ RUN touch /root/entrypoint.sh &&\
 
 RUN chmod +x /root/entrypoint.sh
 
-ENTRYPOINT "/root/entrypoint.sh"
+# ENTRYPOINT "/root/entrypoint.sh"
+CMD "/root/entrypoint.sh"
