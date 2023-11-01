@@ -11,6 +11,9 @@ ARG TPL_DIREC=/opt/GEOS/GEOS_TPL-245-83-da2415a
 ARG CMAKE_BASE_VERSION=3.23
 ARG CMAKE_SUB_VERSION=5
 
+## CPU cores for number of parallel processes for cmake build
+ARG N_CPUS=16
+
 ## build GEOSX for respective git commit/tag
 ARG COMMIT=v1.0.1
 
@@ -25,6 +28,8 @@ ARG TPL_DIREC
 
 ARG CMAKE_BASE_VERSION
 ARG CMAKE_SUB_VERSION
+
+ARG N_CPUS
 
 ARG COMMIT
 
@@ -139,7 +144,7 @@ ADD docker.cmake /app/GEOSX/host-configs/docker.cmake
 RUN rm -rf /app/GEOSX/build-docker-release /app/GEOSX/install-docker-release
 RUN python scripts/config-build.py -hc host-configs/docker.cmake -bt Release
 WORKDIR /app/GEOSX/build-docker-release
-RUN make -j16
+RUN make -j${N_CPUS}
 RUN make install
 
 ## run post build tests 

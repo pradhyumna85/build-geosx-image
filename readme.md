@@ -33,7 +33,7 @@ Refer how to pass arguments to docker build - [here](https://docs.docker.com/bui
 
 Please refer the build **ARG**s in the Dockerfile and pass these to docker build according to your needs, like:
 
-> `docker build --build-arg ORG=geosx --build-arg IMG=ubuntu20.04-gcc9 --build-arg VERSION=245-83 --build-arg CMAKE_BASE_VERSION=3.23 --build-arg CMAKE_SUB_VERSION=5 --build-arg TPL_DIREC=/opt/GEOS/GEOS_TPL-245-83-da2415a --build-arg COMMIT=v1.0.1 -t <your_docker_repository_url>:<tag> .`
+> `docker build --build-arg ORG=geosx --build-arg IMG=ubuntu20.04-gcc9 --build-arg VERSION=245-83 --build-arg CMAKE_BASE_VERSION=3.23 --build-arg CMAKE_SUB_VERSION=5 --build-arg N_CPUS=16 --build-arg TPL_DIREC=/opt/GEOS/GEOS_TPL-245-83-da2415a --build-arg COMMIT=v1.0.1 -t <your_docker_repository_url>:<tag> .`
 
 However for builing with default **ARG**s:
 
