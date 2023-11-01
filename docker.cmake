@@ -7,8 +7,8 @@ message("CONFIG_NAME = ${CONFIG_NAME}")
 
 # set paths to C, C++, and Fortran compilers. Note that while GEOSX does not contain any Fortran code,
 # some of the third-party libraries do contain Fortran code. Thus a Fortran compiler must be specified.
-set(CMAKE_C_COMPILER "/usr/bin/clang-8" CACHE PATH "")
-set(CMAKE_CXX_COMPILER "/usr/bin/clang++-8" CACHE PATH "")
+set(CMAKE_C_COMPILER "/usr/bin/gcc-9" CACHE PATH "")
+set(CMAKE_CXX_COMPILER "/usr/bin/g++-9" CACHE PATH "")
 set(CMAKE_Fortran_COMPILER "/usr/bin/gfortran" CACHE PATH "")
 set(ENABLE_FORTRAN OFF CACHE BOOL "" FORCE)
 
@@ -20,6 +20,7 @@ set(ENABLE_MPI ON CACHE BOOL "")
 set(MPI_C_COMPILER "/usr/bin/mpicc" CACHE PATH "")
 set(MPI_CXX_COMPILER "/usr/bin/mpicxx" CACHE PATH "")
 set(MPI_Fortran_COMPILER "/usr/bin/mpifort" CACHE PATH "")
+
 set(MPIEXEC "/usr/bin/mpirun" CACHE PATH "")
 
 # disable CUDA and OpenMP
@@ -30,9 +31,14 @@ set(ENABLE_OPENMP OFF CACHE BOOL "" FORCE)
 set(ENABLE_PVTPackage ON CACHE BOOL "" FORCE)
 
 # enable tests
-set(ENABLE_GTEST_DEATH_TESTS ON CACHE BOOL "" FORCE )
+set(ENABLE_GTEST_DEATH_TESTS ON CACHE BOOL "" FORCE)
+set(ENABLE_CALIPER ON CACHE BOOL "")
+
+# enable hypre
+set(ENABLE_HYPRE ON CACHE BOOL "" FORCE)
+set(GEOSX_LA_INTERFACE "Hypre" CACHE STRING "" FORCE)
 
 # define the path to your compiled installation directory
-set(GEOSX_TPL_DIR "/opt/GEOSX_TPL" CACHE PATH "")
+set(GEOSX_TPL_DIR "/opt/GEOS/GEOS_TPL-245-83-da2415a" CACHE PATH "")
 # let GEOSX define some third party libraries information for you
 include(${CMAKE_CURRENT_LIST_DIR}/tpls.cmake)

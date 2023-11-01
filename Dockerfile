@@ -1,10 +1,10 @@
 # Define you base image for build arguments
 ARG IMG=ubuntu20.04-gcc9
-ARG VERSION=213-913
+ARG VERSION=245-83
 ARG ORG=geosx
 
-ARG CMAKE_BASE_VERSION=3.22
-ARG CMAKE_SUB_VERSION=6
+ARG CMAKE_BASE_VERSION=3.23
+ARG CMAKE_SUB_VERSION=5
 
 # starting from base image
 FROM ${ORG}/${IMG}:${VERSION}
@@ -28,9 +28,9 @@ RUN apt-get autoremove -y
 
 RUN apt update
 RUN apt-get update
-RUN apt install -y ca-certificates git-lfs nano vim cpp gfortran curl python python3 htop zip unzip
+RUN apt install -y ca-certificates git-lfs nano vim cpp gfortran curl python python3 python3-pip htop zip unzip
 RUN apt-get -y install clang-8 software-properties-common
-RUN apt install -y clang-8
+RUN apt install -y clang-8 clang-10
 RUN apt update
 RUN apt-get update
 
