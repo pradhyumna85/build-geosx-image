@@ -45,7 +45,7 @@ Push the built image to your remote docker repo (make sure you are authenticated
 
 > `docker push <your_docker_repository_url>:<tag>`
 
-# Launching a container from the Base image
+# Launching a container from the Built image
 
 On windows cmd:
 
@@ -55,7 +55,7 @@ On powershell/bash:
 
 > `docker run -it -d --cap-add=SYS_PTRACE --name geosx -p 64000:22 -v "${PWD}\home:/home/mpiuser" <your_docker_repository_url>:<tag>`
 
-*Note: **-v** parameter is for bind mount and is optional in case you really require at this step.
+*Note: **-v** parameter is for bind mount.
 
 # Post build
 
