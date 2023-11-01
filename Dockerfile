@@ -171,5 +171,8 @@ RUN touch /root/entrypoint.sh &&\
 
 RUN chmod +x /root/entrypoint.sh
 
+## change working directory to mpiuser
+WORKDIR /home/mpiuser
+
 # ENTRYPOINT "/root/entrypoint.sh"
 CMD "/root/entrypoint.sh"
