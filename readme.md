@@ -19,15 +19,26 @@ Official links:
 - [GEOSX documentation](https://geosx-geosx.readthedocs-hosted.com/en/latest/?).
 - [GEOSX PDF documentation](https://geosx-geosx.readthedocs-hosted.com/_/downloads/en/latest/pdf/)
 - [GEOSX Official website](https://www.geosx.org/)
-- [GEOSX official Github repository](https://github.com/GEOSX/GEOSX)
+- [GEOSX official Github repository](https://github.com/GEOS-DEV/GEOS)
 
 ## Resources
 
-* Dockerfile to build GEOSX ([GEOSX Documentation — GEOSX documentation (readthedocs-hosted.com)](https://geosx-geosx.readthedocs-hosted.com/en/latest/index.html)) from source.
-* The TPL base image ([Image Layer Details - geosx/ubuntu20.04-gcc9:245-83 | Docker Hub](https://hub.docker.com/layers/geosx/ubuntu20.04-gcc9/245-83/images/sha256-937d16a77b78ee612701a6732cd38ba619c4fa4bb4b4f1e00f1b8f8d773bf17a?context=explore)) used contains prebuit TPL binaries for GEOSX.
-* Prebuilt GEOSX image (using **docker.cmake** in this repository) is hosted at Docker-hub: [Image Layer Details - pradhyumna85/geosx:1.0.1-cpu-x86-64 | Docker Hub](https://hub.docker.com/layers/pradhyumna85/geosx/1.0.1-cpu-x86-64/images/sha256-aa6d2c86174669acb419b46f95008d7480aa1303c38ebd3633fc6530e46b9956?context=repo)
+- Dockerfile to build GEOSX ([GEOSX Documentation — GEOSX documentation (readthedocs-hosted.com)](https://geosx-geosx.readthedocs-hosted.com/en/latest/index.html)) from source.
+- The TPL base image ([Image Layer Details - geosx/ubuntu20.04-gcc9:245-83 | Docker Hub](https://hub.docker.com/layers/geosx/ubuntu20.04-gcc9/245-83/images/sha256-937d16a77b78ee612701a6732cd38ba619c4fa4bb4b4f1e00f1b8f8d773bf17a?context=explore)) used contains prebuit TPL binaries for GEOSX.
+- Prebuilt GEOSX image (using **docker.cmake** in this repository) is hosted at Docker-hub: [Image Layer Details - pradhyumna85/geosx:1.0.1-cpu-x86-64 | Docker Hub](https://hub.docker.com/layers/pradhyumna85/geosx/1.0.1-cpu-x86-64/images/sha256-aa6d2c86174669acb419b46f95008d7480aa1303c38ebd3633fc6530e46b9956?context=repo)
 
 ***Note - for the build guide below, it is recommended to use the latest TPL base image tag with latest GEOSX git commit or source code.**
+
+- For any particular commit, the correct TPL image tag/version to consider is mentioned in [GEOSX git repo](https://github.com/GEOS-DEV/GEOS), in the file: /.github/workflows/ci_tests.yml:
+
+  ```yaml
+  .
+  .
+  env:
+      GEOSX_TPL_TAG: 247-84
+  .
+  .
+  ```
 
 ## Dockerfile build arguments
 
@@ -41,36 +52,32 @@ Please refer the build **ARG**s in the Dockerfile and pass these to docker build
 
 1. `TPL base image to use -> https://hub.docker.com/r/geosx/ubuntu20.04-gcc9/tags:`
 
-```
-IMG=ubuntu20.04-gcc9
-VERSION=245-83
-ORG=geosx
-```
-
+   ```yaml
+   IMG=ubuntu20.04-gcc9
+   VERSION=245-83
+   ORG=geosx
+   ```
 2. `location of precompiled TPL directory for the above image. Example, for default image geosx/ubuntu20.04-gcc9:245-83,its /opt/GEOS/GEOS_TPL-245-83-da2415a, please inspect the TPL image filesystem before building this container:`
 
-```
-TPL_DIREC=/opt/GEOS/GEOS_TPL-245-83-da2415a
-```
-
+   ```yaml
+   TPL_DIREC=/opt/GEOS/GEOS_TPL-245-83-da2415a
+   ```
 3. `cmake version details -> resulting cmake version would be cmake-${CMAKE_BASE_VERSION}.${CMAKE_SUB_VERSION}-linux-x86_64:`
 
-```
-CMAKE_BASE_VERSION=3.23
-CMAKE_SUB_VERSION=5
-```
-
+   ```yaml
+   CMAKE_BASE_VERSION=3.23
+   CMAKE_SUB_VERSION=5
+   ```
 4. `CPU cores for number of parallel processes for cmake build -> make sure the number of cores specified are available to docker:`
 
-```
-N_CPUS=16
-```
-
+   ```yaml
+   N_CPUS=16
+   ```
 5. `build GEOSX for respective git commit/tag -> https://github.com/GEOS-DEV/GEOS/, commits: https://github.com/GEOS-DEV/GEOS/commits/develop, tags: https://github.com/GEOS-DEV/GEOS/tags:`
 
-```
-COMMIT=v1.0.1
-```
+   ```yaml
+   COMMIT=v1.0.1
+   ```
 
 ### However for builing with default **ARG**s:
 
