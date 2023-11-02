@@ -21,7 +21,7 @@ Official links:
 - [GEOSX Official website](https://www.geosx.org/)
 - [GEOSX official Github repository](https://github.com/GEOSX/GEOSX)
 
-# Resources
+## Resources
 
 * Dockerfile to build GEOSX ([GEOSX Documentation — GEOSX documentation (readthedocs-hosted.com)](https://geosx-geosx.readthedocs-hosted.com/en/latest/index.html)) from source.
 * The TPL base image ([Image Layer Details - geosx/ubuntu20.04-gcc9:245-83 | Docker Hub](https://hub.docker.com/layers/geosx/ubuntu20.04-gcc9/245-83/images/sha256-937d16a77b78ee612701a6732cd38ba619c4fa4bb4b4f1e00f1b8f8d773bf17a?context=explore)) used contains prebuit TPL binaries for GEOSX.
@@ -29,7 +29,7 @@ Official links:
 
 ***Note - for the build guide below, it is recommended to use the latest TPL base image tag with latest GEOSX git commit or source code.**
 
-# Dockerfile build arguments
+## Dockerfile build arguments
 
 Refer how to pass arguments to docker build - [here](https://docs.docker.com/build/guide/build-args/)
 
@@ -37,15 +37,50 @@ Please refer the build **ARG**s in the Dockerfile and pass these to docker build
 
 > `docker build --build-arg ORG=geosx --build-arg IMG=ubuntu20.04-gcc9 --build-arg VERSION=245-83 --build-arg CMAKE_BASE_VERSION=3.23 --build-arg CMAKE_SUB_VERSION=5 --build-arg N_CPUS=16 --build-arg TPL_DIREC=/opt/GEOS/GEOS_TPL-245-83-da2415a --build-arg COMMIT=v1.0.1 -t <your_docker_repository_url>:<tag> .`
 
-However for builing with default **ARG**s:
+### Default values of build arguments and their explanation:
+
+1. `TPL base image to use -> https://hub.docker.com/r/geosx/ubuntu20.04-gcc9/tags:`
+
+```
+IMG=ubuntu20.04-gcc9
+VERSION=245-83
+ORG=geosx
+```
+
+2. `location of precompiled TPL directory for the above image. Example, for default image geosx/ubuntu20.04-gcc9:245-83,its /opt/GEOS/GEOS_TPL-245-83-da2415a, please inspect the TPL image filesystem before building this container:`
+
+```
+TPL_DIREC=/opt/GEOS/GEOS_TPL-245-83-da2415a
+```
+
+3. `cmake version details -> resulting cmake version would be cmake-${CMAKE_BASE_VERSION}.${CMAKE_SUB_VERSION}-linux-x86_64:`
+
+```
+CMAKE_BASE_VERSION=3.23
+CMAKE_SUB_VERSION=5
+```
+
+4. `CPU cores for number of parallel processes for cmake build -> make sure the number of cores specified are available to docker:`
+
+```
+N_CPUS=16
+```
+
+5. `build GEOSX for respective git commit/tag -> https://github.com/GEOS-DEV/GEOS/, commits: https://github.com/GEOS-DEV/GEOS/commits/develop, tags: https://github.com/GEOS-DEV/GEOS/tags:`
+
+```
+COMMIT=v1.0.1
+```
+
+### However for builing with default **ARG**s:
 
 > `docker build -t <your_docker_repository_url>:<tag> .`
 
-Push the built image to your remote docker repo (make sure you are authenticated before running this):
+### Push the built image to your remote docker repo (make sure you are authenticated before running this):
 
 > `docker push <your_docker_repository_url>:<tag>`
 
-# Launching a container from the Built image
+## Launching a container from the built image
 
 On windows cmd:
 
@@ -57,10 +92,10 @@ On powershell/bash:
 
 *Note: **-v** parameter is for bind mount.
 
-# Post build
+## Post build
 
 Basic usage guide: [pradhyumna85/geosx - Docker Image | Docker Hub](https://hub.docker.com/r/pradhyumna85/geosx).
 
-# References
+## References
 
 - [Build Guide — GEOSX documentation (readthedocs-hosted.com)](https://geosx-geosx.readthedocs-hosted.com/en/latest/docs/sphinx/buildGuide/Index.html)

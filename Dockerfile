@@ -7,14 +7,14 @@ ARG ORG=geosx
 ## for image geosx/ubuntu20.04-gcc9:245-83,its /opt/GEOS/GEOS_TPL-245-83-da2415a, please inspect the TPL image filesystem before building this container
 ARG TPL_DIREC=/opt/GEOS/GEOS_TPL-245-83-da2415a
 
-## cmake version details
+## cmake version details -> resulting cmake version would be cmake-${CMAKE_BASE_VERSION}.${CMAKE_SUB_VERSION}-linux-x86_64
 ARG CMAKE_BASE_VERSION=3.23
 ARG CMAKE_SUB_VERSION=5
 
-## CPU cores for number of parallel processes for cmake build
+## CPU cores for number of parallel processes for cmake build -> make sure the number of cores specified are available to docker
 ARG N_CPUS=16
 
-## build GEOSX for respective git commit/tag
+## build GEOSX for respective git commit/tag -> https://github.com/GEOS-DEV/GEOS/, commits: https://github.com/GEOS-DEV/GEOS/commits/develop, tags: https://github.com/GEOS-DEV/GEOS/tags
 ARG COMMIT=v1.0.1
 
 # starting from base image
